@@ -29,6 +29,14 @@
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "no-shadow": "off",
+    "quotes" : "off",
+    "no-multi-spaces": "off",
+    "no-unused-vars": "off",
+    "space-in-parens": "off",
+    "no-trailing-spaces": "off",
+    "operator-linebreak ": "off",
+    "react/jsx-closing-tag-location": "off"
   }
 }

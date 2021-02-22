@@ -4,9 +4,8 @@ import {
   Container,
   makeStyles
 } from '@material-ui/core';
-import Page from 'src/components/Page';
+import MainPage from 'src/components/MainPage';
 import Results from './Results';
-import Toolbar from './Toolbar';
 import data from './data';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,20 +19,19 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomerListView = () => {
   const classes = useStyles();
-  const [customers] = useState(data);
+  const [team] = useState(data);
 
   return (
-    <Page
+    <MainPage
       className={classes.root}
-      title="Customers"
+      title="team"
     >
       <Container maxWidth={false}>
-        <Toolbar />
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results team={team} />
         </Box>
       </Container>
-    </Page>
+    </MainPage>
   );
 };
 

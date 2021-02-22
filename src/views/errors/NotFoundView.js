@@ -5,7 +5,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import Page from 'src/components/Page';
+import MainPage from 'src/components/MainPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +26,7 @@ const NotFoundView = () => {
   const classes = useStyles();
 
   return (
-    <Page
+    <MainPage
       className={classes.root}
       title="404"
     >
@@ -61,7 +61,7 @@ const NotFoundView = () => {
           </Box>
         </Container>
       </Box>
-    </Page>
+    </MainPage>
   );
 };
 

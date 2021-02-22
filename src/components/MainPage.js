@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
-const Page = forwardRef(({
+const MainPage = forwardRef(({
   children,
   title = '',
   ...rest
@@ -20,9 +20,9 @@ const Page = forwardRef(({
   );
 });
 
-Page.propTypes = {
+MainPage.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string
 };
 
-export default Page;
+export default MainPage;

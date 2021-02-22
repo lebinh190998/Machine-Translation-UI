@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Document, Page, pdfjs } from "react-pdf";
+import { DropzoneArea } from 'material-ui-dropzone';
 import {
   Container,
   Grid,
-  makeStyles
+  makeStyles,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
 } from '@material-ui/core';
-import Page from 'src/components/Page';
+import MainPage from 'src/components/MainPage';
 import Budget from './Budget';
-import LatestOrders from './LatestOrders';
-import LatestProducts from './LatestProducts';
-import Sales from './Sales';
 import TasksProgress from './TasksProgress';
-import TotalCustomers from './TotalCustomers';
+import TotalTeam from './TotalTeam';
 import TotalProfit from './TotalProfit';
 import TrafficByDevice from './TrafficByDevice';
+import pdf from './VinBigdata.pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,9 +31,22 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
+  const [numPages, setNumPages] = useState(null);
+  const [files, setFiles] = useState([]);
 
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+
+  function handleChange(files) {
+    if (files.length > 0) {
+      console.log(files[0].path);
+    }
+    console.log(pdf);
+    setFiles(files);
+  }
   return (
-    <Page
+    <MainPage
       className={classes.root}
       title="Dashboard"
     >
@@ -52,7 +71,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <TotalTeam />
           </Grid>
           <Grid
             item
@@ -74,43 +93,47 @@ const Dashboard = () => {
           </Grid>
           <Grid
             item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
+            lg={6}
+            md={6}
+            xl={6}
+            xs={6}
           >
-            <Sales />
+            <Card>
+              <CardHeader title="Upload PDF" />
+              <Divider />
+              <CardContent>
+                <DropzoneArea
+                  onChange={handleChange}
+                />
+                {
+                /* eslint operator-linebreak: ["error", "after"] */
+                files.length > 0 &&
+                (
+                <Document
+                  file="./VinBigdata.pdf"
+                  onLoadSuccess={onDocumentLoadSuccess}
+                >
+                  {Array.from(new Array(numPages), (el, index) => (
+                    <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                  ))}
+                </Document>
+                )
+                }
+              </CardContent>
+            </Card>
           </Grid>
           <Grid
             item
-            lg={4}
+            lg={6}
             md={6}
-            xl={3}
-            xs={12}
+            xl={6}
+            xs={6}
           >
             <TrafficByDevice />
           </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <LatestProducts />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <LatestOrders />
-          </Grid>
         </Grid>
       </Container>
-    </Page>
+    </MainPage>
   );
 };
 
