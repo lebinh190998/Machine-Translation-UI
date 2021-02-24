@@ -15,33 +15,23 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const PdfContainer = ({ className, ...rest }) => {
+const PdfContainer = ({ saveImg, className, ...rest }) => {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
-  const [initial, setInitial] = useState({});
-  
-  useEffect(() => {
-    fetch('/api').then(
-      response => response.json()
-    ).then(data => console.log(data));
-  })
 
   const handleChange = (e) => {
     const file = e.target.files[0];
     console.log(file);
 
-    if ( file.type !== "application/pdf") {
-      console.error( file.name, "is not a pdf file.");
-    } else {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setFiles([reader.result]);
-      };
-      reader.onerror = (error) => {
-        console.log('Error: ', error);
-      };
-    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setFiles([reader.result]);
+      saveImg(files[0])
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
+    };
   };
 
   return (

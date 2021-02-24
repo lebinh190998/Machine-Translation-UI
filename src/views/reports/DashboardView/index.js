@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Container,
   Grid,
   makeStyles,
 } from '@material-ui/core';
 import MainPage from 'src/components/MainPage';
-import Budget from './Budget';
+import Output from './Output';
 import TasksProgress from './TasksProgress';
 import TotalTeam from './TotalTeam';
 import TotalProfit from './TotalProfit';
@@ -22,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
+  const [img, setImg] = useState({})
+
+  const saveImg = (img) => {
+    if(img){
+      setImg(img);
+    }
+  }
 
   return (
     <MainPage
@@ -40,7 +47,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <Budget />
+            <TotalTeam />
           </Grid>
           <Grid
             item
@@ -76,7 +83,7 @@ const Dashboard = () => {
             xl={6}
             xs={6}
           >
-            <PdfContainer />
+            <PdfContainer saveImg={saveImg} />
           </Grid>
           <Grid
             item
@@ -85,7 +92,7 @@ const Dashboard = () => {
             xl={6}
             xs={6}
           >
-            Translated Ver
+            {img && <Output img={img}/>}
           </Grid>
         </Grid>
       </Container>
