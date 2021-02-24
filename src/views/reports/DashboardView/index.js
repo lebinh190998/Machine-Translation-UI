@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
-import { Document, Page, pdfjs } from "react-pdf";
-import { DropzoneArea } from 'material-ui-dropzone';
+import React from "react";
 import {
   Container,
   Grid,
   makeStyles,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
 } from '@material-ui/core';
 import MainPage from 'src/components/MainPage';
 import Budget from './Budget';
 import TasksProgress from './TasksProgress';
 import TotalTeam from './TotalTeam';
 import TotalProfit from './TotalProfit';
-import TrafficByDevice from './TrafficByDevice';
-import pdf from './VinBigdata.pdf';
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import PdfContainer from './PdfContainer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,26 +22,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  const [numPages, setNumPages] = useState(null);
-  const [files, setFiles] = useState([]);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
-
-  function handleChange(files) {
-    if (files.length > 0) {
-      console.log(files[0].path);
-    }
-    console.log(pdf);
-    setFiles(files);
-  }
   return (
     <MainPage
       className={classes.root}
       title="Dashboard"
     >
-      <Container maxWidth={false}>
+      <Container maxWidth={false} minHeight="100%">
         <Grid
           container
           spacing={3}
@@ -98,29 +76,7 @@ const Dashboard = () => {
             xl={6}
             xs={6}
           >
-            <Card>
-              <CardHeader title="Upload PDF" />
-              <Divider />
-              <CardContent>
-                <DropzoneArea
-                  onChange={handleChange}
-                />
-                {
-                /* eslint operator-linebreak: ["error", "after"] */
-                files.length > 0 &&
-                (
-                <Document
-                  file="./VinBigdata.pdf"
-                  onLoadSuccess={onDocumentLoadSuccess}
-                >
-                  {Array.from(new Array(numPages), (el, index) => (
-                    <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-                  ))}
-                </Document>
-                )
-                }
-              </CardContent>
-            </Card>
+            <PdfContainer />
           </Grid>
           <Grid
             item
@@ -129,7 +85,7 @@ const Dashboard = () => {
             xl={6}
             xs={6}
           >
-            <TrafficByDevice />
+            Translated Ver
           </Grid>
         </Grid>
       </Container>

@@ -37,6 +37,8 @@
     "space-in-parens": "off",
     "no-trailing-spaces": "off",
     "operator-linebreak ": "off",
-    "react/jsx-closing-tag-location": "off"
+    "react/jsx-closing-tag-location": "off",
+    "linebreak-style" : "off",
+    "object-shorthand": 0
   }
 }
